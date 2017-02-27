@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ssm.dao.ContactsMapper">
+    <resultMap id="BaseResultMap" type="com.ssm.pojo.Contacts">
+        <id column="id" property="id" jdbcType="INTEGER"/>
+        <result column="name" property="name" jdbcType="VARCHAR"/>
+        <result column="dept" property="dept" jdbcType="VARCHAR"/>
+        <result column="dept2" property="dept2" jdbcType="VARCHAR"/>
+        <result column="job" property="job" jdbcType="VARCHAR"/>
+        <result column="tel" property="tel" jdbcType="VARCHAR"/>
+        <result column="s_tel" property="sTel" jdbcType="VARCHAR"/>
+        <result column="email" property="email" jdbcType="VARCHAR"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+    id, name, dept, dept2, job, tel, s_tel, email
+  </sql>
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+        select
+        <include refid="Base_Column_List"/>
+        from contacts
+        where id = #{id,jdbcType=INTEGER}
+    </select>
+    <select id="selectByPage" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from contacts limit #{0},#{1}
+    </select>
+    <select id="selectAll" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from contacts
+    </select>
+    <select id="count" resultType="java.lang.Integer">
+    select count(*)
+    from contacts
+  </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from contacts
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+    <insert id="insert" parameterType="com.ssm.pojo.Contacts">
+    insert into contacts (id, name, dept, 
+      dept2, job, tel, s_tel, 
+      email)
+    values (#{id,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR}, #{dept,jdbcType=VARCHAR}, 
+      #{dept2,jdbcType=VARCHAR}, #{job,jdbcType=VARCHAR}, #{tel,jdbcType=VARCHAR}, #{sTel,jdbcType=VARCHAR}, 
+      #{email,jdbcType=VARCHAR})
+  </insert>
+    <insert id="insertSelective" parameterType="com.ssm.pojo.Contacts">
+        insert into contacts
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                id,
+            </if>
+            <if test="name != null">
+                name,
+            </if>
+            <if test="dept != null">
+                dept,
+            </if>
+            <if test="dept2 != null">
+                dept2,
+            </if>
+            <if test="job != null">
+                job,
+            </if>
+            <if test="tel != null">
+                tel,
+            </if>
+            <if test="sTel != null">
+                s_tel,
+            </if>
+            <if test="email != null">
+                email,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id,jdbcType=INTEGER},
+            </if>
+            <if test="name != null">
+                #{name,jdbcType=VARCHAR},
+            </if>
+            <if test="dept != null">
+                #{dept,jdbcType=VARCHAR},
+            </if>
+            <if test="dept2 != null">
+                #{dept2,jdbcType=VARCHAR},
+            </if>
+            <if test="job != null">
+                #{job,jdbcType=VARCHAR},
+            </if>
+            <if test="tel != null">
+                #{tel,jdbcType=VARCHAR},
+            </if>
+            <if test="sTel != null">
+                #{sTel,jdbcType=VARCHAR},
+            </if>
+            <if test="email != null">
+                #{email,jdbcType=VARCHAR},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.ssm.pojo.Contacts">
+        update contacts
+        <set>
+            <if test="name != null">
+                name = #{name,jdbcType=VARCHAR},
+            </if>
+            <if test="dept != null">
+                dept = #{dept,jdbcType=VARCHAR},
+            </if>
+            <if test="dept2 != null">
+                dept2 = #{dept2,jdbcType=VARCHAR},
+            </if>
+            <if test="job != null">
+                job = #{job,jdbcType=VARCHAR},
+            </if>
+            <if test="tel != null">
+                tel = #{tel,jdbcType=VARCHAR},
+            </if>
+            <if test="sTel != null">
+                s_tel = #{sTel,jdbcType=VARCHAR},
+            </if>
+            <if test="email != null">
+                email = #{email,jdbcType=VARCHAR},
+            </if>
+        </set>
+        where id = #{id,jdbcType=INTEGER}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.ssm.pojo.Contacts">
+    update contacts
+    set name = #{name,jdbcType=VARCHAR},
+      dept = #{dept,jdbcType=VARCHAR},
+      dept2 = #{dept2,jdbcType=VARCHAR},
+      job = #{job,jdbcType=VARCHAR},
+      tel = #{tel,jdbcType=VARCHAR},
+      s_tel = #{sTel,jdbcType=VARCHAR},
+      email = #{email,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>
